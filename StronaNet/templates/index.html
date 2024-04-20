@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Moja Strona</title>
+</head>
+<body>
+    <h1>Projekt studencki grupy Orzełki - strona internetowa z przepisami kulinarnymi</h1>
+
+    <!-- Formularz dodawania nowego przepisu -->
+    <form method="post">
+        <label for="nazwa">Nazwa przepisu:</label><br>
+        <input type="text" id="nazwa" name="nazwa"><br><br>
+
+        <label for="tresc">Treść przepisu:</label><br>
+        <textarea id="tresc" name="tresc"></textarea><br><br>
+
+        <label for="skladniki">Lista składników (oddzielona przecinkami):</label><br>
+        <input type="text" id="skladniki" name="skladniki"><br><br>
+
+        <input type="submit" value="Dodaj przepis">
+    </form>
+
+    <!-- Formularz wyszukiwania przepisów -->
+    <form method="get" action="/">
+        <label for="search">Wyszukaj przepis:</label><br>
+        <input type="text" id="search" name="search"><br><br>
+        <input type="submit" value="Szukaj">
+    </form>
+
+    <!-- Lista przepisów -->
+    <h2>Lista przepisów:</h2>
+    <ul>
+        {% for przepis in przepisy %}
+            <li><a href="/przepis/{{ przepis.id }}">{{ przepis.nazwa }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <!-- Przycisk powrotu do całej listy -->
+    {% if przepisy %}
+        <form action="/" method="get">
+            <input type="submit" value="Powrót do całej listy">
+        </form>
+    {% endif %}
+</body>
+</html>

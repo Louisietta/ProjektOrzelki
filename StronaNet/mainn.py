@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_login import UserMixin, login_user, logout_user, login_required, current_user
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///przepisy.db'
@@ -47,6 +45,8 @@ def index():
     else:
         przepisy = Przepis.query.all()
 
+    przepisy = Przepis.query.all()
+
     return render_template('index.html', przepisy=przepisy)
 
 
@@ -54,6 +54,15 @@ def index():
 def wyswietl_przepis(przepis_id):
     przepis = Przepis.query.get_or_404(przepis_id)
     return render_template('przepis.html', przepis=przepis)
+
+@app.route('/przepis/<int:przepis_id>/edytuj', methods=['POST'])
+def edytuj_przepis(przepis_id):
+    przepis = Przepis.query.get_or_404(przepis_id)
+    if request.method == 'POST':
+        nowa_tresc = request.form['nowa_tresc']
+        przepis.tresc = nowa_tresc
+        db.session.commit()
+        return redirect(url_for('wyswietl_przepis', przepis_id=przepis.id))
 
 
 if __name__ == '__main__':

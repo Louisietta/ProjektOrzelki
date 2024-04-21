@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ przepis.nazwa }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles_przepisy.css') }}">
 </head>
 <body>
     <h1>{{ przepis.nazwa }}</h1>
@@ -18,5 +19,19 @@
 
     <!-- Przycisk "Powrót" przenoszący użytkownika z powrotem do strony głównej -->
     <a href="/">Powrót</a>
+
+ <!-- Formularz edycji treści, nazwy i składników przepisu -->
+    <form method="post" action="{{ url_for('edytuj_przepis', przepis_id=przepis.id) }}">
+        <label for="nowa_nazwa">Nowa nazwa przepisu:</label><br>
+        <input type="text" id="nowa_nazwa" name="nowa_nazwa" value="{{ przepis.nazwa }}"><br><br>
+
+        <label for="nowa_tresc">Nowa treść przepisu:</label><br>
+        <textarea id="nowa_tresc" name="nowa_tresc">{{ przepis.tresc }}</textarea><br><br>
+
+        <label for="nowe_skladniki">Nowe składniki przepisu:</label><br>
+        <input type="text" id="nowe_skladniki" name="nowe_skladniki" value="{{ przepis.skladniki }}"><br><br>
+
+        <input type="submit" value="Zapisz zmiany">
+    </form>
 </body>
 </html>
